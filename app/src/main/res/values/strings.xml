@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ToDoApp</string>
+
+    <string name="no_tasks_found">No tasks found</string>
+    <string name="task_name">Task Name:</string>
+    <string name="task_date">Date:</string>
+    <string name="task_creator">Task Creator:</string>
+    <string name="header_todo_list">ToDo List</string>
+    <string name="create_task">Create Task</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="date_format">DD/MM/YY</string>
+    <string name="create_task_name">Task Name*</string>
+    <string name="task_creator_name">Task Creator*</string>
+
+    <string name="task_add_success_message">Task updated successfully!!</string>
+    <string name="validation_task_name_error_message">Please enter task name</string>
+    <string name="validation_task_creator_error_message">Please enter task creator</string>
+</resources>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="taskList"
+            type="com.example.todoapp.model.UserTaskModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tasks_list_item_main_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_10dp">
+
+        <TextView
+            android:id="@+id/tasks_list_item_text_task_name_label"
+            style="@style/Theme.ToDo.TextView.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_10dp"
+            android:paddingTop="@dimen/padding_10dp"
+            android:paddingEnd="@dimen/padding_10dp"
+            android:paddingBottom="@dimen/padding_5dp"
+            android:text="@string/task_name"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tasks_list_item_text_task_name"
+            style="@style/Theme.ToDo.TextView.Black.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="40"
+            android:maxLines="1"
+            android:paddingTop="@dimen/padding_10dp"
+            android:paddingBottom="@dimen/padding_5dp"
+            android:singleLine="true"
+            android:text="@{taskList.taskName}"
+            app:layout_constraintStart_toEndOf="@+id/tasks_list_item_text_task_name_label"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tasks_list_item_text_date_label"
+            style="@style/Theme.ToDo.TextView.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_10dp"
+            android:paddingTop="@dimen/padding_5dp"
+            android:paddingEnd="@dimen/padding_10dp"
+            android:paddingBottom="@dimen/padding_5dp"
+            android:text="@string/task_date"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_list_item_text_task_name_label" />
+
+        <TextView
+            android:id="@+id/tasks_list_item_text_date"
+            style="@style/Theme.ToDo.TextView.Black.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:paddingTop="@dimen/padding_5dp"
+            android:paddingBottom="@dimen/padding_5dp"
+            android:singleLine="true"
+            android:text="@{taskList.taskDate}"
+            app:layout_constraintStart_toEndOf="@+id/tasks_list_item_text_date_label"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_list_item_text_task_name" />
+
+        <TextView
+            android:id="@+id/tasks_list_item_text_task_creator_label"
+            style="@style/Theme.ToDo.TextView.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_10dp"
+            android:paddingTop="@dimen/padding_5dp"
+            android:paddingEnd="@dimen/padding_10dp"
+            android:paddingBottom="@dimen/padding_10dp"
+            android:text="@string/task_creator"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_list_item_text_date_label" />
+
+        <TextView
+            android:id="@+id/tasks_list_item_text_task_creator"
+            style="@style/Theme.ToDo.TextView.Black.Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:paddingTop="@dimen/padding_5dp"
+            android:paddingBottom="@dimen/padding_10dp"
+            android:singleLine="true"
+            android:text="@{taskList.taskCreator}"
+            app:layout_constraintStart_toEndOf="@+id/tasks_list_item_text_task_creator_label"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_list_item_text_date" />
+
+        <Button
+            android:id="@+id/task_list_item_btn_edit"
+            style="@style/Theme.ToDo.Button.Blue"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="@dimen/button_height_forty"
+            android:layout_marginStart="@dimen/padding_10dp"
+            android:layout_marginLeft="@dimen/padding_10dp"
+            android:layout_marginTop="@dimen/padding_5dp"
+            android:layout_marginBottom="@dimen/padding_5dp"
+            android:text="@string/edit"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toStartOf="@+id/task_list_item_btn_delete"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_list_item_text_task_creator_label" />
+
+        <Button
+            android:id="@+id/task_list_item_btn_delete"
+            style="@style/Theme.ToDo.Button.Blue.Solid"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="@dimen/button_height_forty"
+            android:layout_marginStart="@dimen/padding_10dp"
+            android:layout_marginLeft="@dimen/padding_10dp"
+            android:layout_marginTop="@dimen/padding_5dp"
+            android:layout_marginEnd="@dimen/padding_10dp"
+            android:layout_marginBottom="@dimen/padding_5dp"
+            android:text="@string/delete"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/task_list_item_btn_edit"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_list_item_text_task_creator_label" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
