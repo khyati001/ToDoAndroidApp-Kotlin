@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="taskItem"
+            type="com.example.todoapp.model.UserTaskModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_15dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_create_task_edt_task_name"
+                style="@style/Theme.ToDo.EditText.Blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/create_task_name"
+                android:inputType="text"
+                android:maxLength="40"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@{taskItem.taskName}"
+                android:textColorHint="@color/todo_black_opacity" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/fragment_create_task_edt_date"
+            style="@style/Theme.ToDo.EditText.Blue"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/padding_20dp"
+            android:layout_weight="1"
+            android:autofillHints="@string/date_format"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawableLeft="@drawable/ic_calendar"
+            android:drawablePadding="@dimen/padding_10dp"
+            android:focusable="false"
+            android:inputType="date"
+            android:maxLines="1"
+            android:text="@{taskItem.taskDate}"
+            android:textColorHint="@color/todo_black_opacity"
+            tools:ignore="LabelFor" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_create_task_edt_task_creator"
+                style="@style/Theme.ToDo.EditText.Blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/task_creator_name"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@{taskItem.taskCreator}"
+                android:textColorHint="@color/todo_black_opacity" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/fragment_create_task_btn_save"
+            style="@style/Theme.ToDo.Button.Blue.Solid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_35dp"
+            android:text="@string/save"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+
+</layout>
