@@ -15,5 +15,4 @@
     <color name="todo_list_bg_color">#f5f5f5</color>
     <color name="todo_black">#212121</color>
     <color name="todo_black_opacity">#99212121</color>
-    <color name="todo_delete_color">#FF3232</color>
 </resources>

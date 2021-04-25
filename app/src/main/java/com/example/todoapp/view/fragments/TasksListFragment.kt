@@ -12,6 +12,7 @@ import com.example.todoapp.R
 import com.example.todoapp.adapter.TasksListAdapter
 import com.example.todoapp.databinding.FragmentTasksListBinding
 import com.example.todoapp.util.Constants
+import com.example.todoapp.util.Constants.Companion.TASK_LIST_FRAGMENT_TAG
 import com.example.todoapp.view.base.BaseActivity
 import com.example.todoapp.view.base.BaseFragment
 import com.example.todoapp.viewmodel.UserTaskViewModel
@@ -29,7 +30,7 @@ class TasksListFragment : BaseFragment() {
     }
 
     override fun getTitle(): String {
-        return "TasksListFragment"
+        return TASK_LIST_FRAGMENT_TAG
     }
 
     override fun onCreateView(
@@ -59,9 +60,7 @@ class TasksListFragment : BaseFragment() {
                 DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             )
         }
-        (activity as BaseActivity).setToolBarTitle(
-            getString(R.string.header_todo_list), true
-        )
+        (activity as BaseActivity).setToolBarTitle(getString(R.string.header_todo_list), true)
         mFragmentTasksListBinding.fragmentTasksListFloatingActionButton.setOnClickListener {
             (activity as BaseActivity).addFragment(
                 CreateTaskFragment.newInstance(Constants.ZERO, false)

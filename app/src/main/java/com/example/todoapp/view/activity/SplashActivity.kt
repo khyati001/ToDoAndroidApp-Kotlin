@@ -8,10 +8,9 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todoapp.R
+import com.example.todoapp.util.Constants.Companion.SPLASH_TIME_OUT
 
 class SplashActivity : AppCompatActivity() {
-
-    private val SPLASH_TIME_OUT = 3000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

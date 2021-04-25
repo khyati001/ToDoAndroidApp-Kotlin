@@ -27,7 +27,7 @@ class UserTaskRepository(context: Context) {
     private val userTaskDao: UserTaskDao = ToDoAppDatabase.getInstance(context).userTaskDao()
 
     /**
-     * Method to insert or update user task  details into database
+     * Method to insert or update user task details into database
      *
      * @param userTaskModel userTaskModel
      */
@@ -75,7 +75,7 @@ class UserTaskRepository(context: Context) {
     }
 
     /**
-     * Method to get task details from database
+     * Method to get task details by task id from database
      *
      * @param taskId taskId
      * @return Task details

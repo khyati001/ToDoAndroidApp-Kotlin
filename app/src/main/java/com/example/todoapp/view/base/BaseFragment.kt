@@ -19,6 +19,11 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun getTitle(): String?
 
+    /**
+     * Method to add fragment
+     *
+     * @param fragment fragment
+     */
     protected open fun addFragment(fragment: BaseFragment) {
         mAddFragmentHandler.addFragment(fragment)
     }

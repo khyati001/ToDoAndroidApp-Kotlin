@@ -24,10 +24,12 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mCreateTaskBinding: FragmentCreateTaskBinding
     private lateinit var mDateSetListener: DatePickerDialog.OnDateSetListener
     private lateinit var mUserTaskViewModel: UserTaskViewModel
-    private lateinit var mUserTasksList: List<UserTaskModel>
-    var mCalendar: Calendar = Calendar.getInstance()
-    var mIsEditMode: Boolean = false
-    var mTaskId: Int = Constants.ZERO
+    private var mUserTasksList: List<UserTaskModel> = listOf()
+    private var mCalendar: Calendar = Calendar.getInstance()
+    private var mIsEditMode: Boolean = false
+    private var mTaskId: Int = Constants.ZERO
+    private var mTaskDate: String = ""
+    private var mTaskCreator: String = ""
 
     companion object {
         fun newInstance(id: Int, isEditMode: Boolean): CreateTaskFragment {
@@ -35,7 +37,6 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
             val bundle = Bundle()
             bundle.putInt(Constants.BUNDLE_TASK_ID, id)
             bundle.putBoolean(Constants.BUNDLE_IS_EDITABLE, isEditMode)
-            //bundle.putParcelable(Constants.BUNDLE_TASK_ID, userTaskList)
             fragment.arguments = bundle
             return fragment
         }
@@ -80,7 +81,7 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
         mCreateTaskBinding.fragmentCreateTaskEdtDate.setOnClickListener(this)
         mCreateTaskBinding.fragmentCreateTaskBtnSave.setOnClickListener(this)
         getUserTasksList()
-        getTaskDetails()
+        getTaskDetailsItem()
     }
 
     /**
@@ -104,15 +105,16 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
     }
 
     /**
-     * Method to get task details from local db and display it
+     * Method to get task details item from local db and display it
      */
-    private fun getTaskDetails() {
+    private fun getTaskDetailsItem() {
         mUserTaskViewModel.getUserTaskById(context!!, mTaskId).observe(viewLifecycleOwner, {
             if (it != null)
                 mCreateTaskBinding.taskItem = it
-            else {
+            else
                 updateDateInView()
-            }
+            mTaskDate = mCreateTaskBinding.fragmentCreateTaskEdtDate.text.toString()
+            mTaskCreator = mCreateTaskBinding.fragmentCreateTaskEdtTaskCreator.text.toString()
         })
     }
 
@@ -180,14 +182,16 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
         userTask.taskDate = mCreateTaskBinding.fragmentCreateTaskEdtDate.text.toString()
         userTask.taskCreator = mCreateTaskBinding.fragmentCreateTaskEdtTaskCreator.text.toString()
         if (!mIsEditMode) {
-            for (items in mUserTasksList) {
-                if (items.taskName.equals(userTask.taskName, true)) {
-                    Toast.makeText(
-                        context,
-                        getString(R.string.validation_same_task_message),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return
+            if (mUserTasksList.isNotEmpty()) {
+                for (items in mUserTasksList) {
+                    if (items.taskName.equals(userTask.taskName, true)) {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.validation_same_task_message),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return
+                    }
                 }
             }
         }
