@@ -1,8 +1,10 @@
 package com.example.todoapp.adapter
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
@@ -41,8 +43,21 @@ class TasksListAdapter(
             )
         }
         holder.taskListBinding.taskListItemBtnDelete.setOnClickListener {
-            mUserTaskViewModel.deleteUserTaskById(activity!!, userTaskList[position].id)
-            notifyDataSetChanged()
+            AlertDialog.Builder(activity)
+                .setMessage(activity!!.getString(R.string.alert_delete))
+                .setCancelable(false)
+                .setPositiveButton(activity.getString(R.string.dialog_yes)) { dialog, _ ->
+                    mUserTaskViewModel.deleteUserTaskById(activity, userTaskList[position].id)
+                    notifyDataSetChanged()
+                    Toast.makeText(
+                        activity,
+                        activity.getString(R.string.task_delete_success_message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    dialog.dismiss()
+                }.setNegativeButton(
+                    activity.getString(R.string.dialog_no)
+                ) { dialog, _ -> dialog.dismiss() }.create().show()
         }
     }
 }
