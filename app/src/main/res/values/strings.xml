@@ -22,5 +22,8 @@
     <string name="validation_same_task_message">Task with same name already exists!!</string>
     <string name="validation_task_name_error_message">Please enter task name</string>
     <string name="validation_task_creator_error_message">Please enter task creator</string>
+    <string name="new_notification">New Notification</string>
+    <string name="application_has_internet_message">ToDo App has Internet Access</string>
+    <string name="application_in_offline_mode_message">ToDo App is in Offline Mode</string>
     <string name="alert_delete">Are you sure you want to delete?</string>
 </resources>
