@@ -24,6 +24,7 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mCreateTaskBinding: FragmentCreateTaskBinding
     private lateinit var mDateSetListener: DatePickerDialog.OnDateSetListener
     private lateinit var mUserTaskViewModel: UserTaskViewModel
+    private lateinit var mUserTasksList: List<UserTaskModel>
     var mCalendar: Calendar = Calendar.getInstance()
     var mIsEditMode: Boolean = false
     var mTaskId: Int = Constants.ZERO
@@ -78,6 +79,7 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
             }
         mCreateTaskBinding.fragmentCreateTaskEdtDate.setOnClickListener(this)
         mCreateTaskBinding.fragmentCreateTaskBtnSave.setOnClickListener(this)
+        getUserTasksList()
         getTaskDetails()
     }
 
@@ -112,6 +114,18 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
                 updateDateInView()
             }
         })
+    }
+
+    /**
+     * Method to observe user task's list and display it
+     */
+    private fun getUserTasksList() {
+        mUserTaskViewModel.getUserTasksList(context!!)
+            .observe(viewLifecycleOwner, {
+                if (it.isNotEmpty()) {
+                    mUserTasksList = it
+                }
+            })
     }
 
     /**
@@ -161,15 +175,32 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
      */
     private fun updateUserTaskData() {
         val userTask = UserTaskModel()
-        if (mIsEditMode) {
-            userTask.id = mTaskId
-        }
+        userTask.id = mTaskId
         userTask.taskName = mCreateTaskBinding.fragmentCreateTaskEdtTaskName.text.toString()
         userTask.taskDate = mCreateTaskBinding.fragmentCreateTaskEdtDate.text.toString()
         userTask.taskCreator = mCreateTaskBinding.fragmentCreateTaskEdtTaskCreator.text.toString()
+        if (!mIsEditMode) {
+            for (items in mUserTasksList) {
+                if (items.taskName.equals(userTask.taskName, true)) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.validation_same_task_message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return
+                }
+            }
+        }
         mUserTaskViewModel.executeUserTaskLocallyUpdate(context!!, userTask)
-        Toast.makeText(context, getString(R.string.task_add_success_message), Toast.LENGTH_LONG)
-            .show()
+        if (mIsEditMode)
+            Toast.makeText(
+                context,
+                getString(R.string.task_update_success_message),
+                Toast.LENGTH_LONG
+            ).show()
+        else
+            Toast.makeText(context, getString(R.string.task_add_success_message), Toast.LENGTH_LONG)
+                .show()
         activity?.supportFragmentManager?.popBackStack()
     }
 
