@@ -17,7 +17,8 @@ import com.example.todoapp.view.base.BaseActivity
 import com.example.todoapp.view.base.BaseFragment
 import com.example.todoapp.viewmodel.UserTaskViewModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class CreateTaskFragment : BaseFragment(), View.OnClickListener {
 
@@ -108,26 +109,26 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
      * Method to get task details item from local db and display it
      */
     private fun getTaskDetailsItem() {
-        mUserTaskViewModel.getUserTaskById(context!!, mTaskId).observe(viewLifecycleOwner, {
+        mUserTaskViewModel.getUserTaskById(requireContext(), mTaskId).observe(viewLifecycleOwner) {
             if (it != null)
                 mCreateTaskBinding.taskItem = it
             else
                 updateDateInView()
             mTaskDate = mCreateTaskBinding.fragmentCreateTaskEdtDate.text.toString()
             mTaskCreator = mCreateTaskBinding.fragmentCreateTaskEdtTaskCreator.text.toString()
-        })
+        }
     }
 
     /**
      * Method to observe user task's list and display it
      */
     private fun getUserTasksList() {
-        mUserTaskViewModel.getUserTasksList(context!!)
-            .observe(viewLifecycleOwner, {
+        mUserTaskViewModel.getUserTasksList(requireContext())
+            .observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
                     mUserTasksList = it
                 }
-            })
+            }
     }
 
     /**
@@ -135,7 +136,7 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
      */
     private fun openDatePickerDialog() {
         val datePickerDialog = DatePickerDialog(
-            activity!!,
+            requireActivity(),
             mDateSetListener,
             // set DatePickerDialog to point to today's date when it loads up
             mCalendar.get(Calendar.YEAR),
@@ -181,21 +182,19 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
         userTask.taskName = mCreateTaskBinding.fragmentCreateTaskEdtTaskName.text.toString()
         userTask.taskDate = mCreateTaskBinding.fragmentCreateTaskEdtDate.text.toString()
         userTask.taskCreator = mCreateTaskBinding.fragmentCreateTaskEdtTaskCreator.text.toString()
-        if (!mIsEditMode) {
-            if (mUserTasksList.isNotEmpty()) {
-                for (items in mUserTasksList) {
-                    if (items.taskName.equals(userTask.taskName, true)) {
-                        Toast.makeText(
-                            context,
-                            getString(R.string.validation_same_task_message),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return
-                    }
+        if (mUserTasksList.isNotEmpty()) {
+            for (items in mUserTasksList) {
+                if (items.taskName.equals(userTask.taskName, true)) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.validation_same_task_message),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return
                 }
             }
         }
-        mUserTaskViewModel.executeUserTaskLocallyUpdate(context!!, userTask)
+        mUserTaskViewModel.executeUserTaskLocallyUpdate(requireContext(), userTask)
         if (mIsEditMode)
             Toast.makeText(
                 context,
@@ -207,5 +206,4 @@ class CreateTaskFragment : BaseFragment(), View.OnClickListener {
                 .show()
         activity?.supportFragmentManager?.popBackStack()
     }
-
 }

@@ -7,25 +7,27 @@ import androidx.room.RoomDatabase
 import com.example.todoapp.database.dao.UserTaskDao
 import com.example.todoapp.model.UserTaskModel
 
-@Database(entities = [(UserTaskModel::class)], version = 1)
+@Database(entities = [UserTaskModel::class], version = 1)
 abstract class ToDoAppDatabase : RoomDatabase() {
 
     companion object {
         // marking the instance as volatile to ensure atomic access to the variable
         @Volatile
-        private var instance: ToDoAppDatabase? = null
+        private var INSTANCE: ToDoAppDatabase? = null
 
         @Synchronized
         fun getInstance(context: Context): ToDoAppDatabase {
-            if (instance == null)
-                instance = Room.databaseBuilder(
+
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
                     context.applicationContext, ToDoAppDatabase::class.java,
                     "todo_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
+                ).fallbackToDestructiveMigration().build()
 
-            return instance!!
+                INSTANCE = instance
+                // Return instance
+                instance
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.example.todoapp.R
@@ -34,7 +35,7 @@ class HomeActivity : BaseActivity() {
         // build an object of PeriodicWorkRequestBuilder
         val workerRequest = PeriodicWorkRequest
             .Builder(
-                WifiWorker::class.java, 1,
+                WifiWorker::class.java, 15,
                 TimeUnit.MINUTES
             ).build()
         //Enqueue the work request to an instance of Work Manager
@@ -42,7 +43,7 @@ class HomeActivity : BaseActivity() {
     }
 
     /**
-     * Method to crrate notification channel
+     * Method to create notification channel
      */
     private fun createNotificationChannel() {
         val notificationManager =

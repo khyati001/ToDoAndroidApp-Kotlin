@@ -53,7 +53,7 @@ class TasksListFragment : BaseFragment() {
      * Method to initialize UI views
      */
     private fun initialization() {
-        mUserTaskViewModel = ViewModelProvider(this).get(UserTaskViewModel::class.java)
+        mUserTaskViewModel = ViewModelProvider(this)[UserTaskViewModel::class.java]
         mFragmentTasksListBinding.fragmentTasksListRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             mFragmentTasksListBinding.fragmentTasksListRecyclerView.addItemDecoration(
@@ -73,8 +73,8 @@ class TasksListFragment : BaseFragment() {
      * Method to observe user task's list and display it
      */
     private fun getUserTasksList() {
-        mUserTaskViewModel.getUserTasksList(context!!)
-            .observe(viewLifecycleOwner, {
+        mUserTaskViewModel.getUserTasksList(requireContext())
+            .observe(viewLifecycleOwner) {
                 if (it.isEmpty()) {
                     mFragmentTasksListBinding.fragmentTasksListTextNoData.visibility = View.VISIBLE
                     mFragmentTasksListBinding.fragmentTasksListRecyclerView.visibility = View.GONE
@@ -86,6 +86,6 @@ class TasksListFragment : BaseFragment() {
                     mFragmentTasksListBinding.fragmentTasksListRecyclerView.adapter =
                         mTaskListAdapter
                 }
-            })
+            }
     }
 }

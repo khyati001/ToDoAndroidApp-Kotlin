@@ -48,7 +48,7 @@ class TasksListAdapter(
                 .setCancelable(false)
                 .setPositiveButton(activity.getString(R.string.dialog_yes)) { dialog, _ ->
                     mUserTaskViewModel.deleteUserTaskById(activity, userTaskList[position].id)
-                    notifyDataSetChanged()
+                    notifyItemChanged(position)
                     Toast.makeText(
                         activity,
                         activity.getString(R.string.task_delete_success_message),

@@ -37,14 +37,14 @@ class AddFragmentHandler(private val fragmentManager: FragmentManager?) {
      * Method to get current fragment
      */
     private fun getCurrentFragment(): BaseFragment? {
-        if (fragmentManager!!.backStackEntryCount == Constants.ZERO) {
+        if (fragmentManager?.backStackEntryCount == Constants.ZERO) {
             return null
         }
-        val currentEntry = fragmentManager.getBackStackEntryAt(
+        val currentEntry = fragmentManager?.getBackStackEntryAt(
             fragmentManager.backStackEntryCount - Constants.ONE
         )
-        val tag = currentEntry.name
-        val fragment = fragmentManager.findFragmentByTag(tag)
+        val tag = currentEntry?.name
+        val fragment = fragmentManager?.findFragmentByTag(tag)
         return fragment as BaseFragment
     }
 
